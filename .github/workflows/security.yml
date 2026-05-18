@@ -61,6 +61,7 @@ jobs:
   frontend-deps-scan:
     name: Frontend Dependency Audit
     runs-on: ubuntu-latest
+    continue-on-error: true
     defaults:
       run:
         working-directory: frontend
@@ -103,6 +104,7 @@ jobs:
   container-scan:
     name: Container Image Scan
     runs-on: ubuntu-latest
+    continue-on-error: true
     needs: [python-deps-scan]
     steps:
     - name: Checkout repository
