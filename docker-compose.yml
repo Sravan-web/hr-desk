@@ -1,0 +1,43 @@
+# HRBot — Docker Compose (Strategy #5: Fast-Track Deployment)
+# One command to run the full stack: docker-compose up
+#
+# This is the fastest way to demo the app — no manual setup needed.
+
+services:
+  # ─── Backend API ─────────────────────────────────────────────────
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - ALLOWED_ORIGINS=http://localhost:5173,http://localhost:3000
+      - ALLOWED_HOSTS=localhost,127.0.0.1,backend
+      - AUTH_REQUIRED=false
+      - ENABLE_DOCS=true
+    volumes:
+      - chroma_data:/app/chroma_db
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
+  # ─── Frontend (Dev Server) ────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8000
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  chroma_data:

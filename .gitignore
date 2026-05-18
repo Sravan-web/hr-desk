@@ -1,0 +1,53 @@
+# ─── Environments & Secrets (Strategy #4) ────────────────────────────
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
+
+# Firebase service account keys — CRITICAL: never commit
+firebase-service-account.json
+*-service-account.json
+*.p12
+*.pem
+
+# ─── Node modules ───────────────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ─── Python ─────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.venv/
+*.egg-info/
+
+# ─── Database ───────────────────────────────────────────────────────
+chroma_db/
+*.sqlite3
+
+# ─── Audit & Logs (contain sensitive request data) ──────────────────
+audit.log
+*.log
+
+# ─── OS generated files ─────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+
+# ─── Cloud Build / Deployment ───────────────────────────────────────
+temp_*
+
+# ─── IDE ─────────────────────────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo
